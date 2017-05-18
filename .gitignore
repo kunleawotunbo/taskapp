@@ -3,3 +3,4 @@ build/
 lib/
 nbproject/
 test/
+/dist/

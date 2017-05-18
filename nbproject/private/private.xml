@@ -3,11 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/olakunle/NetBeansProjects/TaskApp/web/WEB-INF/dispatcher-servlet.xml</file>
-            <file>file:/home/olakunle/NetBeansProjects/TaskApp/web/redirect.jsp</file>
-            <file>file:/home/olakunle/NetBeansProjects/TaskApp/web/WEB-INF/jsp/index.jsp</file>
-            <file>file:/home/olakunle/NetBeansProjects/TaskApp/web/WEB-INF/applicationContext.xml</file>
-            <file>file:/home/olakunle/NetBeansProjects/TaskApp/src/java/com/olakunle/taskapp/configuration/TaskAppConfiguration.java</file>
+            <file>file:/home/olakunle/NetBeansProjects/TaskApp/web/WEB-INF/views/includes/header.jsp</file>
+            <file>file:/home/olakunle/NetBeansProjects/TaskApp/web/WEB-INF/views/backup.jsp</file>
+            <file>file:/home/olakunle/NetBeansProjects/TaskApp/src/java/com/olakunle/taskapp/configuration/AppConfig.java</file>
+            <file>file:/home/olakunle/NetBeansProjects/TaskApp/web/WEB-INF/views/userslist.jsp</file>
         </group>
     </open-files>
 </project-private>

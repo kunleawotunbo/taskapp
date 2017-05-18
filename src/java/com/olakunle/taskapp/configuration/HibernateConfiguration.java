@@ -16,11 +16,6 @@ import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-/**
- *
- * @author olakunle
- */
-
 @Configuration
 @EnableTransactionManagement
 @ComponentScan({ "com.olakunle.taskapp.configuration" })
@@ -57,7 +52,7 @@ public class HibernateConfiguration {
         return properties;        
     }
     
-    @Bean
+	@Bean
     @Autowired
     public HibernateTransactionManager transactionManager(SessionFactory s) {
        HibernateTransactionManager txManager = new HibernateTransactionManager();

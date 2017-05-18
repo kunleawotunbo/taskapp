@@ -47,6 +47,11 @@ public class User implements Serializable {
     private String passportPhotograph;
     @Column(name = "item_view")
     private String itemView;
+    @Column(name = "img_location")
+    private String imgLocation;
+    @Column(name = "img_name")
+    private String imgName;
+    
 
     public User() {
     }
@@ -143,6 +148,34 @@ public class User implements Serializable {
     @Override
     public String toString() {
         return "com.olakunle.taskapp.model.User[ id=" + id + " ]";
+    }
+
+    /**
+     * @return the imgName
+     */
+    public String getImgName() {
+        return imgName;
+    }
+
+    /**
+     * @param imgName the imgName to set
+     */
+    public void setImgName(String imgName) {
+        this.imgName = imgName;
+    }
+
+    /**
+     * @return the imgLocation
+     */
+    public String getImgLocation() {
+        return imgLocation;
+    }
+
+    /**
+     * @param imgLocation the imgLocation to set
+     */
+    public void setImgLocation(String imgLocation) {
+        this.imgLocation = imgLocation;
     }
     
 }

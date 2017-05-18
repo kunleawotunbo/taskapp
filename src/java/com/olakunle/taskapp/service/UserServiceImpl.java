@@ -25,9 +25,13 @@ public class UserServiceImpl implements UserService{
     public UserDao userDao;
     
     @Override
-    public boolean saveOrUpdateUser(User user) {
-        return userDao.saveOrUpdateUser(user);
+    public boolean saveUser(User user) {
+        return userDao.saveUser(user);
     }
+    
+     public boolean updateUser(User user){
+         return userDao.updateUser(user);
+     }
 
     @Override
     public User findUserById(int id) {
