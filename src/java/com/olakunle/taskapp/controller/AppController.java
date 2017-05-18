@@ -387,7 +387,8 @@ public class AppController {
         model.addAttribute("user", fileBucket);
         model.addAttribute("edit", true);
         model.addAttribute("image", encodedString);
-        return "registration";
+        //return "registration";
+        return "adduser";
     }
 
     /**

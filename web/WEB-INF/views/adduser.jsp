@@ -127,15 +127,21 @@
                 <div class="form-group">
                     <div class="row">
                         <div class="col-xs-4">
-                            <c:choose>
-                                <c:when test="${edit}">
-                                    <input type="submit" value="Update" class="btn btn-primary btn-sm"/> or <a href="<c:url value='/list' />">Cancel</a>
-                                </c:when>
-                                <c:otherwise>
-                                    <input type="submit" value="Register" class="btn btn-primary btn-sm"/> or <a href="<c:url value='/list' />">Cancel</a>
-                                </c:otherwise>
-                            </c:choose>
-                        </div>
+                           
+                            </div>
+                            <div class="col-xs-4">
+                                <c:choose>
+                                    <c:when test="${edit}">
+                                        <input type="submit" value="Update" class="btn btn-primary "/> or <a href="<c:url value='/list' />" class="btn btn-danger ">Cancel</a>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <input type="submit" value="Register" class="btn btn-primary "/> or <a href="<c:url value='/list' />">Cancel</a>
+                                    </c:otherwise>
+                                </c:choose>
+                            </div>
+                            <div class="col-xs-4">
+                           </div>
+                       
                     </div>  
                 </div>
 
