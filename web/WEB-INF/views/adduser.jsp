@@ -165,6 +165,19 @@
                     </div>                        
                 </div>
 
+<%--                            
+                 <div class="form-group ">                        
+                    <div class="control-label col-xs-3"> <form:label path="file" >Item View </form:label> </div>
+                        <div class="col-md-6">
+                        <form:input type="file" path="file" id="file" onchange="readURL(this)" class="form-control input-sm" required="required"/>
+                        <div class="has-error">
+                            <form:errors path="file" class="help-inline"/>
+                        </div>
+                    </div>
+                </div>            --%>
+                            
+                            
+                            
 
                 <!--                <div class="form-group">
                                     <div class="row">

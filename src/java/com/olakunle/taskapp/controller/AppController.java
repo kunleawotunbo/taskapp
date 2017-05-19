@@ -135,10 +135,23 @@ public class AppController {
         return "users";
     }
 
+      /**
+     * This method will provide the medium to add a new user on the home page.
+     */
+    @RequestMapping(value = {"/"}, method = RequestMethod.GET)
+    public String getHome(ModelMap model) {
+
+        FileBucket user = new FileBucket();
+        model.addAttribute("user", user);
+       // model.addAttribute("edit", false);
+        // return "adduser";
+         return "redirect:/register";
+    }
     /**
      * This method will provide the medium to add a new user.
      */
-    @RequestMapping(value = {"/", "/register"}, method = RequestMethod.GET)
+   // @RequestMapping(value = {"/", "/register"}, method = RequestMethod.GET)
+     @RequestMapping(value = { "/register"}, method = RequestMethod.GET)
     public String register(ModelMap model) {
         /*
         User user = new User();
