@@ -10,48 +10,90 @@
 <%@ include file="includes2/navigation.jsp" %> 
 
 
-<script lanuage="Javascript">
-    function doSubmit(frm) {
-        if (frm.countryId.value == "" || frm.countryId.value == "0") {
-            alert("please specify country");
-            frm.countryId.focus();
-            return;
-        }
-
-        if (frm.bankCode.value == "") {
-            alert("Bank Code is required");
-            frm.bankCode.focus();
-            return;
-        }
-        if (frm.bankName.value == "") {
-            alert("Bank Name is required");
-            frm.bankName.focus();
-            return;
-        }
-        frm.submit();
-    }
-</script>
-
 <div class="container myrow-container">
+
+
+
+    <div class="row"> 
+
+        <div class="col-md-6">
+            <div class="panel panel-default"> 
+                <div class="panel-heading">
+                    <div class="panel-btns">
+                    </div><!-- panel-btns -->
+                    <h5 class="panel-title">NOTICE</h5>
+                    <!--<p>Notice . </p>-->
+                </div><!-- panel-heading -->
+                <div class="panel-body "> 
+
+                    <p>Notice shows here. </p>
+                </div>
+            </div>
+
+        </div>
+
+
+
+
+
+        <!-- Search panel start -->
+
+        <div class="col-md-6">
+            <div class="panel panel-default"> 
+                <div class="panel-heading">
+                    <div class="panel-btns">
+                    </div><!-- panel-btns -->
+                    <h5 class="panel-title">Query User</h5>
+                    <p>Query using phone number. </p>
+                </div><!-- panel-heading -->
+                <div class="panel-body "> 
+
+                    <form action="searchUser">
+                        <div class="row">
+                            <div class="col-md-6">
+
+                                <div class="col-md-6"> 
+                                    <input type="text" name="searchPhone" id="searchPhone" placeholder="Search using phone number" required="required"/>
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-4"><input class="btn btn-success" type="submit" value="Search" /></div>
+                        </div>                 
+
+                    </form> 
+
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!--search panel ends-->
+
+
+
     <div class="panel panel-success">
         <div class="panel-heading">
             <h3 class="panel-title">
                 Registration
             </h3>
         </div>
+
+        <br><br>
+
+        <!--Registration form start-->
+
+        <c:if test="${saved}">          
+            <div class="alert alert-success lead">
+                ${success}
+            </div>
+        </c:if>   
+
         <div class="panel-body">
             <form:form method="POST" modelAttribute="user" enctype="multipart/form-data" class="form-horizontal">
-
-
-                <div>
-                    <div class="form-group ">
-
-                        <div class="control-label col-xs-6">
-                            <img src="data:image/jpeg;base64,${image}" alt="..."floatRight width="200" height="200">
-
-                        </div>
-                    </div>                        
-                </div>
 
 
                 <div class="form-group ">                        
@@ -84,6 +126,8 @@
                 </div>
 
 
+
+
                 <div class="form-group ">                        
                     <div class="control-label col-xs-3"> <form:label path="phoneNumber" >Phone Number </form:label> </div>
                         <div class="col-md-6">
@@ -111,37 +155,49 @@
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <div class="row">
-                        <div class="col-xs-4">
+                <div>
+                    <div class="form-group ">
+
+                        <div class="control-label col-xs-6">
+                            <img src="data:image/jpeg;base64,${image}" alt="..."floatRight width="200" height="200">
+
                         </div>
-                        <div class="col-xs-4">
-                            <input type="submit" id="saveUser" class="btn btn-primary" value="Save" onclick="return submitUserForm();"/>
-                        </div>
-                        <div class="col-xs-4">
-                        </div>
-                    </div>
+                    </div>                        
                 </div>
 
 
+                <!--                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-xs-4">
+                                        </div>
+                                        <div class="col-xs-4">
+                                            <input type="submit" id="saveUser" class="btn btn-primary" value="Save" onclick="return submitUserForm();"/>
+                                        </div>
+                                        <div class="col-xs-4">
+                                        </div>
+                                    </div>
+                                </div>
+                -->
+
                 <div class="form-group">
                     <div class="row">
                         <div class="col-xs-4">
-                           
-                            </div>
-                            <div class="col-xs-4">
-                                <c:choose>
-                                    <c:when test="${edit}">
-                                        <input type="submit" value="Update" class="btn btn-primary "/> or <a href="<c:url value='/list' />" class="btn btn-danger ">Cancel</a>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <input type="submit" value="Register" class="btn btn-primary "/> or <a href="<c:url value='/list' />">Cancel</a>
-                                    </c:otherwise>
-                                </c:choose>
-                            </div>
-                            <div class="col-xs-4">
-                           </div>
-                       
+
+                        </div>
+                        <div class="col-xs-4">
+                            <c:choose>
+                                <c:when test="${edit}">
+                                    <input type="submit" value="Update" class="btn btn-primary "/> or <a href="<c:url value='/register' />" >Cancel</a>
+                                </c:when>
+                                <c:otherwise>
+                                    <%--          <input type="submit" value="Register" class="btn btn-primary "/> or <a href="<c:url value='/list' />">Cancel</a>--%>
+                                    <input type="submit" id="saveUser" class="btn btn-primary" value="Submit" onclick="return submitUserForm();"/> or <a href="<c:url value='/register' />">Cancel</a>
+                                </c:otherwise>
+                            </c:choose>
+                        </div>
+                        <div class="col-xs-4">
+                        </div>
+
                     </div>  
                 </div>
 
@@ -150,6 +206,21 @@
         </div>
     </div>
 </div>
+<!--Registration form ends--> 
+
+<script type="text/javascript">
+    function confirmDelete() {
+
+        var r = confirm("Do you want to Delete this user?");
+        if (r == true) {
+            frm.submit();
+        } else {
+            return false;
+        }
+        return true;
+    }
+    ;
+</script>
 
 
 <script type="text/javascript">

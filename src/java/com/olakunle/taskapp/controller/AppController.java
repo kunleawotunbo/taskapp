@@ -78,7 +78,7 @@ public class AppController {
     /**
      * This method will list all existing users.
      */
-    @RequestMapping(value = {"/", "/list"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/testing", "/list"}, method = RequestMethod.GET)
     public String listUsers1(ModelMap model, HttpServletRequest req) {
 
         List<User> users = userService.findAllUsers();
@@ -96,16 +96,17 @@ public class AppController {
         model.addAttribute("users", users);
         return "userslist";
     }
-    
-     @RequestMapping("findUser")
+
+    @RequestMapping("findUser")
     public String getSearch(ModelMap model) {
         // logger.info("Searching the Employee. Employee Names: "+searchPhone);
-         List<User> userList = null;
+        List<User> userList = null;
         //userList = userService.queryUserByPhoneNo(searchPhone);
         model.addAttribute("users", userList);
 
         return "search";
     }
+
     @RequestMapping("searchUser")
     public String searchUser(@RequestParam("searchPhone") String searchPhone, ModelMap model) {
         // logger.info("Searching the Employee. Employee Names: "+searchPhone);
@@ -157,7 +158,7 @@ public class AppController {
     /**
      * This method will provide the medium to add a new user.
      */
-    @RequestMapping(value = {"/register"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/", "/register"}, method = RequestMethod.GET)
     public String register(ModelMap model) {
         /*
         User user = new User();
@@ -184,7 +185,9 @@ public class AppController {
         //String serverFileName = "";
         int width = 580;
         int height = 450;
+        boolean saved = false;
 
+        FileBucket fb = new FileBucket();
         User user = new User();
         if (result.hasErrors()) {
             return "registration";
@@ -201,12 +204,13 @@ public class AppController {
                     dir.mkdirs();
                 }
                 FilenameUtils fileUTIL = new FilenameUtils();
-
+                String tempDirectoryPath = System.getProperty("java.io.tmpdir");
+                System.out.println("tempDirectoryPath :: " + tempDirectoryPath);
                 String ext = fileUTIL.getExtension(file.getOriginalFilename());
                 String baseName = fileUTIL.getBaseName(file.getOriginalFilename());
                 String serverFileName = dir + File.separator + baseName + "." + ext;
-                //originalImgPath = dir + File.separator + baseName + "." + ext;
-                //System.out.println("serverFileName:" + serverFileName);
+                //String serverFileName = tempDirectoryPath + File.separator + baseName + "." + ext;
+            
 
                 //utility.resize(originalImgPath, resizedImgPath, width, height);
                 //create the file on server
@@ -215,7 +219,8 @@ public class AppController {
                         new FileOutputStream(serverFile));
                 stream.write(bytes);
                 stream.close();
-
+                
+                System.out.println("bytes ::" + bytes);
                 user.setFirstName(fileBucket.getFirstName());
                 user.setLastName(fileBucket.getLastName());
                 user.setPhoneNumber(fileBucket.getPhoneNumber());
@@ -228,7 +233,7 @@ public class AppController {
                 //System.out.println("user.getFirstName :: " + user.getFirstName());
                 //System.out.println("multipartFile.getOriginalFilename() :: " + file.getOriginalFilename());
                 //System.out.println("user.address :: " + user.getAddress());
-                userService.saveUser(user);
+                saved = userService.saveUser(user);
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -238,10 +243,16 @@ public class AppController {
             System.out.println("File is empty / No image uploaded");
         }
 
-        model.addAttribute("user", user);
-        model.addAttribute("success", "User " + user.getFirstName() + " " + user.getLastName() + " registered successfully");
+        //model.addAttribute("user", user);
+        model.addAttribute("user", fb);
+        model.addAttribute("success", "User " + user.getFirstName() + " " + user.getLastName() + " saved successfully");
+        model.addAttribute("saved", saved);
         //return "success";
-        return "registrationsuccess";
+        // return "registrationsuccess";
+        
+        //return new ModelAndView("redirect:/doFeedback.htm?message=Balloon Loan Repayment Processing was successful&redirectURI=newBalloonPayment.htm?id=");
+         return "adduser";
+        //return "redirect:/adduser";
     }
 
     @RequestMapping(value = "/test.htm", method = RequestMethod.GET)
@@ -395,10 +406,91 @@ public class AppController {
      * This method will be called on form submission, handling POST request for
      * updating user in database. It also validates the user input
      */
-    @RequestMapping(value = {"/edit-user-{ssoId}"}, method = RequestMethod.POST)
-    public String updateUser(@Valid User user, BindingResult result,
-            ModelMap model, @PathVariable String ssoId) {
+    @RequestMapping(value = {"/edit-user-{id}"}, method = RequestMethod.POST)
+    public String updateUser(@Valid FileBucket fileBucket, BindingResult result,
+            ModelMap model, @PathVariable String id) {
+         
+      
+        
+        MultipartFile file = fileBucket.getFile();
+        String originalImgPath = "";
+        String resizedImgPath = "";
+        //String serverFileName = "";
+        int width = 580;
+        int height = 450;
+        boolean saved = false;
 
+        FileBucket fb = new FileBucket();
+        User user = new User();
+        if (result.hasErrors()) {
+            return "adduser";
+        }
+        if (!file.isEmpty()) {
+
+            try {
+
+                byte[] bytes = file.getBytes();
+                // Creating the directory to store file
+                String rootPath = System.getProperty("catalina.home");
+                File dir = new File(rootPath + File.separator + "tmpFiles");
+                if (!dir.exists()) {
+                    dir.mkdirs();
+                }
+                FilenameUtils fileUTIL = new FilenameUtils();
+
+                String ext = fileUTIL.getExtension(file.getOriginalFilename());
+                String baseName = fileUTIL.getBaseName(file.getOriginalFilename());
+                String serverFileName = dir + File.separator + baseName + "." + ext;
+                //originalImgPath = dir + File.separator + baseName + "." + ext;
+                //System.out.println("serverFileName:" + serverFileName);
+
+                //utility.resize(originalImgPath, resizedImgPath, width, height);
+                //create the file on server
+                File serverFile = new File(serverFileName);
+                BufferedOutputStream stream = new BufferedOutputStream(
+                        new FileOutputStream(serverFile));
+                stream.write(bytes);
+                stream.close();
+
+                user.setFirstName(fileBucket.getFirstName());
+                user.setLastName(fileBucket.getLastName());
+                user.setPhoneNumber(fileBucket.getPhoneNumber());
+                user.setItemView(fileBucket.getItemView());
+                user.setAddress(fileBucket.getAddress());
+                user.setPassportPhotograph(file.getOriginalFilename());
+                user.setImgLocation(serverFileName);
+                user.setImgName(file.getOriginalFilename());
+
+                //System.out.println("user.getFirstName :: " + user.getFirstName());
+                //System.out.println("multipartFile.getOriginalFilename() :: " + file.getOriginalFilename());
+                //System.out.println("user.address :: " + user.getAddress());
+                saved = userService.saveUser(user);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        } else {
+            System.out.println("File is empty / No image uploaded");
+        }      
+        
+        
+        userService.updateUser(user);
+        
+         //model.addAttribute("user", user);
+        model.addAttribute("user", fb);
+        model.addAttribute("success", "User " + user.getFirstName() + " " + user.getLastName() + " saved successfully");
+        model.addAttribute("saved", saved);
+
+        model.addAttribute("success", "User " + user.getFirstName() + " " + user.getLastName() + " updated successfully");
+       // return "registrationsuccess";
+        return "adduser";
+    }
+   /*
+    @RequestMapping(value = {"/edit-user-{id}"}, method = RequestMethod.POST)
+    public String updateUser(@Valid User user, BindingResult result,
+            ModelMap model, @PathVariable String id) {
+         
         if (result.hasErrors()) {
             return "registration";
         }
@@ -408,6 +500,7 @@ public class AppController {
         model.addAttribute("success", "User " + user.getFirstName() + " " + user.getLastName() + " updated successfully");
         return "registrationsuccess";
     }
+    */
 
     /**
      * This method will delete an user by it's id value.

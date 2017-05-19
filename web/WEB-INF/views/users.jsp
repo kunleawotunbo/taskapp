@@ -20,7 +20,7 @@
                     <div class="media-body">
                         <h4> USERS LIST</h4>
                     </div>
-                    <table id="bank-list" class="table table-striped table-bordered responsive">  
+                    <table id="user-list" class="table table-striped table-bordered responsive" cellspacing="0" width="100%">  
                         <thead>
                            <tr>
                                 <th> ID</th>
@@ -43,6 +43,9 @@
                                     <td>${user.phoneNumber}</td>
                                     <td>
                                         <%--<img src="data:image/jpeg;base64,${image}" alt="..."float:right width="200" height="200">--%> 
+                                        ${user.imgLocation}
+                                      contextPath ::   ${pageContext.request.contextPath}
+                                          <img class="photo-icon" src="${pageContext.request.contextPath}${user.imgLocation}" >
                                     </td>
                                     <td><a href="<c:url value='/edit-user-${user.id}' />" class="btn btn-success custom-width">edit</a></td>
                                     <td><a href="<c:url value='/delete-user-${user.id}' />" class="btn btn-danger custom-width">delete</a></td>
@@ -100,4 +103,21 @@
         }
     }
 </script>
+
 <%@ include file="includes2/footer.jsp" %>  
+
+<script>
+    $(document).ready(function(){
+         jQuery('select').select2({
+                    minimumResultsForSearch: -1
+                });
+	jQuery('#user-list').DataTable({
+                    responsive: true
+                });
+                
+        jQuery('#select-search-hide').select2({
+                    minimumResultsForSearch: 15
+                });        
+    })
+</script>
+   
