@@ -131,7 +131,7 @@
                 <div class="form-group ">                        
                     <div class="control-label col-xs-3"> <form:label path="phoneNumber" >Phone Number </form:label> </div>
                         <div class="col-md-6">
-                        <form:input type="text" path="phoneNumber" id="phoneNumber" class="form-control input-sm" required="required"/>
+                        <form:input type="number" path="phoneNumber" id="phoneNumber" class="form-control input-sm" required="required"/>
                         <div class="has-error">
                             <form:errors path="phoneNumber" class="help-inline"/>
                         </div>
@@ -148,12 +148,12 @@
                     </div>
                 </div>
 
-                <div class="form-group ">                        
+<!--                <div class="form-group ">                        
                     <div class="control-label col-xs-3">  </div>
                     <div class="col-md-6">
                         <img id="myImg" src="#" alt="your image" /> 
                     </div>
-                </div>
+                </div>-->
 
                 <div>
                     <div class="form-group ">

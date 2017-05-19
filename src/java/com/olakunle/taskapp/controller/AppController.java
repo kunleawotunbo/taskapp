@@ -49,7 +49,10 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 //@RequestMapping("/")
 public class AppController {
-
+    
+    // For heroku
+    // https://github.com/heroku/heroku-cli-deploy
+    
     @Autowired
     MessageSource messageSource;
 
@@ -57,23 +60,6 @@ public class AppController {
     private UserService userService;
     Utility utility = new Utility();
 
-    @RequestMapping(value = "/hello", method = RequestMethod.GET)
-    public ModelAndView getData() {
-
-        ModelAndView model = new ModelAndView("hello");
-
-        return model;
-
-    }
-
-    @RequestMapping(value = "/hello1", method = RequestMethod.GET)
-    public ModelAndView getData1() {
-
-        ModelAndView model = new ModelAndView("hello1");
-
-        return model;
-
-    }
 
     /**
      * This method will list all existing users.
@@ -97,19 +83,30 @@ public class AppController {
         return "userslist";
     }
 
+    /**
+     * To get user search page
+     * @param model
+     * @return 
+     */
     @RequestMapping("findUser")
     public String getSearch(ModelMap model) {
-        // logger.info("Searching the Employee. Employee Names: "+searchPhone);
+       
         List<User> userList = null;
-        //userList = userService.queryUserByPhoneNo(searchPhone);
+       
         model.addAttribute("users", userList);
 
         return "search";
     }
 
+    /**
+     * To search for user using phone number (like)
+     * @param searchPhone Phone number to search
+     * @param model
+     * @return 
+     */
     @RequestMapping("searchUser")
     public String searchUser(@RequestParam("searchPhone") String searchPhone, ModelMap model) {
-        // logger.info("Searching the Employee. Employee Names: "+searchPhone);
+        
         List<User> userList = userService.queryUserByPhoneNo(searchPhone);
         model.addAttribute("users", userList);
 
@@ -136,23 +133,6 @@ public class AppController {
          */
         model.addAttribute("users", users);
         return "users";
-    }
-
-    /**
-     * This method will provide the medium to add a new user.
-     */
-    @RequestMapping(value = {"/newuser"}, method = RequestMethod.GET)
-    public String newUser(ModelMap model) {
-        /*
-        User user = new User();
-        model.addAttribute("user", user);
-        model.addAttribute("edit", false);
-        return "registration";
-         */
-        FileBucket user = new FileBucket();
-        model.addAttribute("user", user);
-        model.addAttribute("edit", false);
-        return "registration";
     }
 
     /**
@@ -247,111 +227,13 @@ public class AppController {
         model.addAttribute("user", fb);
         model.addAttribute("success", "User " + user.getFirstName() + " " + user.getLastName() + " saved successfully");
         model.addAttribute("saved", saved);
-        //return "success";
-        // return "registrationsuccess";
-        
-        //return new ModelAndView("redirect:/doFeedback.htm?message=Balloon Loan Repayment Processing was successful&redirectURI=newBalloonPayment.htm?id=");
-         return "adduser";
+      
+        return "adduser";
         //return "redirect:/adduser";
     }
 
-    @RequestMapping(value = "/test.htm", method = RequestMethod.GET)
-    public ModelAndView getUser(ModelMap map, HttpServletRequest request) {
-
-        boolean result = false;
-        User user = new User();
-        user.setFirstName("Olakunle");
-        user.setLastName("Awotunbo");
-        user.setAddress("58, Osundairo street");
-        user.setPassportPhotograph("dksldlfdslfsdf");
-        user.setPhoneNumber("07031528126");
-
-        result = userService.saveUser(user);
-        if (result) {
-            System.out.println("Saved successfully :: " + user.getFirstName());
-        } else {
-            System.out.println("Failed to save user :: " + user.getFirstName());
-        }
-
-        map.addAttribute("user", new User());
-        map.addAttribute("users", userService.findAllUsers());
-        //return new ModelAndView("userlist", map);
-        return new ModelAndView("test", map);
-    }
-
-    /**
-     * This method will be called on form submission, handling POST request for
-     * saving user in database. It also validates the user input
-     */
-    @RequestMapping(value = {"/newuser"}, method = RequestMethod.POST)
-    public String saveUser(/*@Valid User user */@Valid FileBucket fileBucket, BindingResult result,
-            ModelMap model) {
-        MultipartFile file = fileBucket.getFile();
-        String originalImgPath = "";
-        String resizedImgPath = "";
-        //String serverFileName = "";
-        int width = 580;
-        int height = 450;
-
-        User user = new User();
-        if (result.hasErrors()) {
-            return "registration";
-        }
-        if (!file.isEmpty()) {
-
-            try {
-
-                byte[] bytes = file.getBytes();
-                // Creating the directory to store file
-                String rootPath = System.getProperty("catalina.home");
-                File dir = new File(rootPath + File.separator + "tmpFiles");
-                if (!dir.exists()) {
-                    dir.mkdirs();
-                }
-                FilenameUtils fileUTIL = new FilenameUtils();
-
-                String ext = fileUTIL.getExtension(file.getOriginalFilename());
-                String baseName = fileUTIL.getBaseName(file.getOriginalFilename());
-                String serverFileName = dir + File.separator + baseName + "." + ext;
-                //originalImgPath = dir + File.separator + baseName + "." + ext;
-                //System.out.println("serverFileName:" + serverFileName);
-
-                //utility.resize(originalImgPath, resizedImgPath, width, height);
-                //create the file on server
-                File serverFile = new File(serverFileName);
-                BufferedOutputStream stream = new BufferedOutputStream(
-                        new FileOutputStream(serverFile));
-                stream.write(bytes);
-                stream.close();
-
-                user.setFirstName(fileBucket.getFirstName());
-                user.setLastName(fileBucket.getLastName());
-                user.setPhoneNumber(fileBucket.getPhoneNumber());
-                user.setItemView(fileBucket.getItemView());
-                user.setAddress(fileBucket.getAddress());
-                user.setPassportPhotograph(file.getOriginalFilename());
-                user.setImgLocation(serverFileName);
-                user.setImgName(file.getOriginalFilename());
-
-                //System.out.println("user.getFirstName :: " + user.getFirstName());
-                //System.out.println("multipartFile.getOriginalFilename() :: " + file.getOriginalFilename());
-                //System.out.println("user.address :: " + user.getAddress());
-                userService.saveUser(user);
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-        } else {
-            System.out.println("File is empty / No image uploaded");
-        }
-
-        model.addAttribute("user", user);
-        model.addAttribute("success", "User " + user.getFirstName() + " " + user.getLastName() + " registered successfully");
-        //return "success";
-        return "registrationsuccess";
-    }
-
+ 
+    
     /**
      * This method will provide the medium to update an existing user.
      */
@@ -398,7 +280,7 @@ public class AppController {
         model.addAttribute("user", fileBucket);
         model.addAttribute("edit", true);
         model.addAttribute("image", encodedString);
-        //return "registration";
+        
         return "adduser";
     }
 
@@ -483,24 +365,10 @@ public class AppController {
         model.addAttribute("saved", saved);
 
         model.addAttribute("success", "User " + user.getFirstName() + " " + user.getLastName() + " updated successfully");
-       // return "registrationsuccess";
+       
         return "adduser";
     }
-   /*
-    @RequestMapping(value = {"/edit-user-{id}"}, method = RequestMethod.POST)
-    public String updateUser(@Valid User user, BindingResult result,
-            ModelMap model, @PathVariable String id) {
-         
-        if (result.hasErrors()) {
-            return "registration";
-        }
-
-        userService.updateUser(user);
-
-        model.addAttribute("success", "User " + user.getFirstName() + " " + user.getLastName() + " updated successfully");
-        return "registrationsuccess";
-    }
-    */
+ 
 
     /**
      * This method will delete an user by it's id value.
@@ -511,46 +379,4 @@ public class AppController {
         return "redirect:/allusers";
     }
 
-
-    /*
-	@RequestMapping(value = { "/add-document-{userId}" }, method = RequestMethod.POST)
-	public String uploadDocument(@Valid FileBucket fileBucket, BindingResult result, ModelMap model, @PathVariable int userId) throws IOException{
-		
-		if (result.hasErrors()) {
-			System.out.println("validation errors");
-			User user = userService.findById(userId);
-			model.addAttribute("user", user);
-
-			List<UserDocument> documents = userDocumentService.findAllByUserId(userId);
-			model.addAttribute("documents", documents);
-			
-			return "managedocuments";
-		} else {
-			
-			System.out.println("Fetching file");
-			
-			User user = userService.findById(userId);
-			model.addAttribute("user", user);
-
-			saveDocument(fileBucket, user);
-
-			return "redirect:/add-document-"+userId;
-		}
-	}
-	
-	private void saveDocument(FileBucket fileBucket, User user) throws IOException{
-		
-		UserDocument document = new UserDocument();
-		
-		MultipartFile multipartFile = fileBucket.getFile();
-		
-		document.setName(multipartFile.getOriginalFilename());
-		document.setDescription(fileBucket.getDescription());
-		document.setType(multipartFile.getContentType());
-		document.setContent(multipartFile.getBytes());
-		document.setUser(user);
-		userDocumentService.saveDocument(document);
-	}
-        
-     */
 }
