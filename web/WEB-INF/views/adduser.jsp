@@ -93,13 +93,17 @@
         </c:if>   
 
         <div class="panel-body">
+            <center>
+                <strong> <p><font size="3" color="red"> Please fill the form below. All fields are mandatory.</font></p> </strong>
+            </center>
+            
             <form:form method="POST" modelAttribute="user" enctype="multipart/form-data" class="form-horizontal">
 
-
+                <form:hidden path="id" />
                 <div class="form-group ">                        
                     <div class="control-label col-xs-3"> <form:label path="firstName" >First Name</form:label> </div>
                         <div class="col-md-6">
-                        <form:input type="text" path="firstName" id="firstName" class="form-control input-sm" required="required"/>
+                        <form:input type="text" path="firstName" id="firstName" class="form-control input-sm" maxlength="50" required="required"/>
                         <div class="has-error">
                             <form:errors path="firstName" class="help-inline"/>
                         </div>
@@ -108,7 +112,7 @@
                 <div class="form-group ">                        
                     <div class="control-label col-xs-3"> <form:label path="lastName" >Last Name</form:label> </div>
                         <div class="col-md-6">
-                        <form:input type="text" path="lastName" id="lastName" class="form-control input-sm" required="required"/>
+                        <form:input type="text" path="lastName" id="lastName" class="form-control input-sm" maxlength="50" required="required"/>
                         <div class="has-error">
                             <form:errors path="lastName" class="help-inline"/>
                         </div>
@@ -118,7 +122,7 @@
                 <div class="form-group ">                        
                     <div class="control-label col-xs-3"> <form:label path="address" >Address</form:label> </div>
                         <div class="col-md-6">
-                        <form:input type="text" path="address" id="address" class="form-control input-sm" required="required"/>
+                        <form:input type="text" path="address" id="address" class="form-control input-sm" maxlength="100" required="required"/>
                         <div class="has-error">
                             <form:errors path="address" class="help-inline"/>
                         </div>
@@ -131,7 +135,7 @@
                 <div class="form-group ">                        
                     <div class="control-label col-xs-3"> <form:label path="phoneNumber" >Phone Number </form:label> </div>
                         <div class="col-md-6">
-                        <form:input type="number" path="phoneNumber" id="phoneNumber" class="form-control input-sm" required="required"/>
+                        <form:input type="number" path="phoneNumber" id="phoneNumber" class="form-control input-sm" maxlength="11" required="required"/>
                         <div class="has-error">
                             <form:errors path="phoneNumber" class="help-inline"/>
                         </div>
@@ -139,45 +143,83 @@
                 </div>
 
                 <div class="form-group ">                        
-                    <div class="control-label col-xs-3"> <form:label path="file" >Upload a Passport Photograph </form:label> </div>
+                    <div class="control-label col-xs-3"> <form:label path="files" >Passport Photograph </form:label> </div>
                         <div class="col-md-6">
-                        <form:input type="file" path="file" id="file" onchange="readURL(this)" class="form-control input-sm" required="required"/>
+                        <form:input type="file" path="files" id="file" onchange="readURL(this)" class="form-control input-sm" required="required"/>
                         <div class="has-error">
-                            <form:errors path="file" class="help-inline"/>
+                            <form:errors path="files" class="help-inline"/>
                         </div>
                     </div>
+
                 </div>
 
-<!--                <div class="form-group ">                        
-                    <div class="control-label col-xs-3">  </div>
-                    <div class="col-md-6">
-                        <img id="myImg" src="#" alt="your image" /> 
-                    </div>
-                </div>-->
+                <!--                <div class="form-group ">                        
+                                    <div class="control-label col-xs-3">  </div>
+                                    <div class="col-md-6">
+                                        <img id="myImg" src="#" alt="your image" /> 
+                                    </div>
+                                </div>-->
 
-                <div>
-                    <div class="form-group ">
+                <c:if test="${edit}">          
+                    <div>
+                        <div class="form-group ">
+
+                            <div class="control-label col-xs-6">
+                                <img src="data:image/jpeg;base64,${passportImage}" alt="..."floatRight width="200" height="200">
+
+                            </div>
+                        </div>                        
+                    </div>
+                </c:if>   
+
+                <%--  
+                    <div>
+                        <div class="form-group ">
 
                         <div class="control-label col-xs-6">
-                            <img src="data:image/jpeg;base64,${image}" alt="..."floatRight width="200" height="200">
+                            <img src="data:image/jpeg;base64,${passportImage}" alt="..."floatRight width="200" height="200">
 
                         </div>
                     </div>                        
                 </div>
+                --%>
 
-<%--                            
-                 <div class="form-group ">                        
-                    <div class="control-label col-xs-3"> <form:label path="file" >Item View </form:label> </div>
+
+                <div class="form-group ">                        
+                    <div class="control-label col-xs-3"> <form:label path="files" >Item View </form:label> </div>
                         <div class="col-md-6">
-                        <form:input type="file" path="file" id="file" onchange="readURL(this)" class="form-control input-sm" required="required"/>
+                        <form:input type="file" path="files" id="file2" onchange="readURL(this)" class="form-control input-sm" required="required"/>
                         <div class="has-error">
-                            <form:errors path="file" class="help-inline"/>
+                            <form:errors path="files" class="help-inline"/>
                         </div>
                     </div>
-                </div>            --%>
-                            
-                            
-                            
+                </div>           
+
+            <%--
+                <div>
+                    <div class="form-group ">
+
+                        <div class="control-label col-xs-6">
+                            <img src="data:image/jpeg;base64,${itemViewImage}" alt="..."floatRight width="200" height="200">
+                        </div>
+                    </div>                        
+                </div>
+                --%>
+
+
+                <c:if test="${edit}">          
+                    <div>
+                        <div class="form-group ">
+
+                            <div class="control-label col-xs-6">
+                                <img src="data:image/jpeg;base64,${itemViewImage}" alt="..."floatRight width="200" height="200">
+
+                            </div>
+                        </div>                        
+                    </div>
+                </c:if>        
+
+
 
                 <!--                <div class="form-group">
                                     <div class="row">
@@ -243,27 +285,48 @@
         var firstName = $('#firstName').val().trim();
         var lastName = $('#lastName').val().trim();
         var address = $('#address').val().trim();
-        var phoneNumber = $('#phoneNumber').val();
+        var phoneNumber = $('#phoneNumber').val().trim();
+        var image = $('#file').val().trim();
+        //var image = document.getElementById("image").value;
         var file = $('#file').val();
-        if (firstName.length == 0) {
+        var file2 = $('#file2').val();
+        if (firstName.length === 0) {
             alert('Please enter First Name');
             $('#firstName').focus();
             return false;
         }
-        if (lastName.length == 0) {
+        if (lastName.length === 0) {
             alert('Please enter Last name');
             $('#lastName').focus();
             return false;
         }
-        if (address.length == 0) {
+        if (address.length === 0) {
             alert('Please enter address');
             $('#address').focus();
             return false;
         }
-        if (phoneNumber.length == 0) {
+        if (phoneNumber.length < 11) {
+            alert('Phone Number not up to 11 digits');
+            $('#phoneNumber').focus();
+            return false;
+        } 
+        if (phoneNumber.length === '') {
             alert('Please enter Phone Number');
             $('#phoneNumber').focus();
             return false;
+        } else {
+            console.log("Phone number is not 0");
+            /*
+             if (!phoneNumber.match(/^\+?([0-9]{2})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/)) {
+             console.log("Invalid phone number");
+             alert("Invalid phone number");                
+             $('#phoneNumber').focus();
+             return false;
+             }
+             console.log("Outside  phone number");
+             
+             */
+
         }
 //        var phoneno = /^\+?([0-9]{2})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/;
 //        if(!phoneNumber.value.match(phoneno)){
@@ -275,7 +338,37 @@
         if (file.length == 0) {
             alert('Please upload a passport');
             $('#file').focus();
+
             return false;
+        } else {
+
+            var checkimg = image.toLowerCase();
+            if (!checkimg.match(/(\.jpg|\.png|\.JPG|\.PNG|\.jpeg|\.JPEG)$/)) {
+                console.log("I am insie checking");
+                alert("Please upload Image File Extensions .jpg,.png,.jpeg");
+                $('#file').focus();
+                return false;
+            }
+            console.log("Outside checking");
+
+        }
+        
+        if (file2.length == 0) {
+            alert('Please upload an item');
+            $('#file2').focus();
+
+            return false;
+        } else {
+
+            var checkimg = image.toLowerCase();
+            if (!checkimg.match(/(\.jpg|\.png|\.JPG|\.PNG|\.jpeg|\.JPEG)$/)) {
+                console.log("I am insie checking");
+                alert("Please upload Image File Extensions .jpg,.png,.jpeg");
+                $('#file2').focus();
+                return false;
+            }
+            console.log("Outside checking");
+
         }
 
         var r = confirm("Do you want to Submit?");
@@ -284,7 +377,6 @@
         } else {
             return false;
         }
-
 
         return true;
     }

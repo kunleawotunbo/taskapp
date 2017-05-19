@@ -57,7 +57,7 @@
                                     <td>${user.address}</td>
                                     <td>${user.phoneNumber}</td>
                                     <td>
-                                        <%--<img src="data:image/jpeg;base64,${image}" alt="..."float:right width="200" height="200">--%> 
+                                        <img src="data:image/jpeg;base64,${image}" alt="..."float:right width="200" height="200"> 
                                     </td>
                                     <td><a href="<c:url value='/edit-user-${user.id}' />" class="btn btn-success custom-width">edit</a></td>
                                     <td><a href="<c:url value='/delete-user-${user.id}' />" class="btn btn-danger custom-width" onclick="return confirmDelete();">delete</a></td>

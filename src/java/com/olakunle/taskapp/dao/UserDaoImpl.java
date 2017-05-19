@@ -56,7 +56,9 @@ public class UserDaoImpl implements UserDao {
 			entity.setAddress(user.getAddress());
 			entity.setPassportPhotograph(user.getPassportPhotograph());
                         entity.setPhoneNumber(user.getPhoneNumber());
-                        
+                        entity.setImgLocation(user.getImgLocation());
+                        entity.setImgName(user.getPassportPhotograph());
+                        entity.setImgItemName(user.getImgItemName());
                        //  this.sessionFactory.getCurrentSession().update(user);
                         success = true;
 		}

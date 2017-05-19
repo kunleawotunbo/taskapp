@@ -24,7 +24,7 @@ public class FileBucket {
     private String imgName;
     private String imgItemName;
     private String imgItemLocation;
-    private MultipartFile file;
+    private MultipartFile[] files;
 
     /**
      * @return the id
@@ -124,19 +124,7 @@ public class FileBucket {
         this.itemView = itemView;
     }
 
-    /**
-     * @return the file
-     */
-    public MultipartFile getFile() {
-        return file;
-    }
 
-    /**
-     * @param file the file to set
-     */
-    public void setFile(MultipartFile file) {
-        this.file = file;
-    }
 
     /**
      * @return the imgLocation
@@ -192,6 +180,20 @@ public class FileBucket {
      */
     public void setImgItemLocation(String imgItemLocation) {
         this.imgItemLocation = imgItemLocation;
+    }
+
+    /**
+     * @return the files
+     */
+    public MultipartFile[] getFiles() {
+        return files;
+    }
+
+    /**
+     * @param files the files to set
+     */
+    public void setFiles(MultipartFile[] files) {
+        this.files = files;
     }
     
 
