@@ -24,6 +24,8 @@ public class FileBucket {
     private String imgName;
     private String imgItemName;
     private String imgItemLocation;
+    private String passportImage;
+    private String itemViewImage;
     private MultipartFile[] files;
 
     /**
@@ -194,6 +196,34 @@ public class FileBucket {
      */
     public void setFiles(MultipartFile[] files) {
         this.files = files;
+    }
+
+    /**
+     * @return the passportImage
+     */
+    public String getPassportImage() {
+        return passportImage;
+    }
+
+    /**
+     * @param passportImage the passportImage to set
+     */
+    public void setPassportImage(String passportImage) {
+        this.passportImage = passportImage;
+    }
+
+    /**
+     * @return the itemViewImage
+     */
+    public String getItemViewImage() {
+        return itemViewImage;
+    }
+
+    /**
+     * @param itemViewImage the itemViewImage to set
+     */
+    public void setItemViewImage(String itemViewImage) {
+        this.itemViewImage = itemViewImage;
     }
     
 

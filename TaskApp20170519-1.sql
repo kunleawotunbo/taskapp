@@ -34,8 +34,11 @@ CREATE TABLE `user` (
   `item_view` varchar(45) DEFAULT NULL,
   `img_location` varchar(255) DEFAULT NULL,
   `img_name` varchar(50) DEFAULT NULL,
+  `img_item_name` varchar(50) DEFAULT NULL,
+  `img_item_location` varchar(500) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --

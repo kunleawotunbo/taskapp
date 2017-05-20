@@ -32,6 +32,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -108,7 +109,44 @@ public class AppController {
     public String searchUser(@RequestParam("searchPhone") String searchPhone, ModelMap model) {
 
         List<User> userList = userService.queryUserByPhoneNo(searchPhone);
-        model.addAttribute("users", userList);
+
+        List<FileBucket> fbUsers = null;
+        FileBucket fb = null;
+        String passportEncodedString = "";
+        String itemViewImagEencodedString = "";
+        if (fbUsers == null) {
+            fbUsers = new ArrayList<FileBucket>();
+        }
+        for (User item : userList) {
+            
+            fb = new FileBucket();
+            //System.out.println( "Passport path :: " +  item.getImgLocation() + item.getPassportPhotograph());
+            //System.out.println( "Item view  path :: " +  item.getImgLocation() + item.getImgItemName());
+
+            passportEncodedString = utility.imageToBase64tring(item.getImgLocation() + item.getPassportPhotograph());
+            itemViewImagEencodedString = utility.imageToBase64tring(item.getImgLocation() + item.getImgItemName());
+
+            fb.setId(item.getId());
+            fb.setFirstName(item.getFirstName());
+            fb.setLastName(item.getLastName());
+            fb.setAddress(item.getAddress());
+            fb.setPhoneNumber(item.getPhoneNumber());
+            fb.setItemView(item.getItemView());
+            fb.setImgLocation(item.getImgItemLocation());
+            fb.setImgName(item.getImgName());
+            fb.setItemViewImage(item.getImgLocation());
+            fb.setPassportImage(passportEncodedString);
+            fb.setItemViewImage(itemViewImagEencodedString);
+
+            System.out.println("fb :: " + fb.getAddress());
+
+            fbUsers.add(fb);
+        }
+
+        //model.addAttribute("itemViewImage", itemViewImagEencodedString);
+        //model.addAttribute("passportImage", passportEncodedString);
+        //model.addAttribute("users", userList);
+        model.addAttribute("users", fbUsers);
 
         return "search";
     }
@@ -119,7 +157,7 @@ public class AppController {
     @RequestMapping(value = {"/allusers"}, method = RequestMethod.GET)
     public String listUsers(ModelMap model, HttpServletRequest req) {
 
-        List<User> users = userService.findAllUsers();
+        List<User> userList = userService.findAllUsers();
         /*
         if (null != user.getImgLocation() && !"".equalsIgnoreCase(user.getImgLocation())) {
             encodedString = utility.imageToBase64tring(user.getImgLocation());
@@ -131,7 +169,47 @@ public class AppController {
         model.addAttribute("edit", true);
         model.addAttribute("image", encodedString);
          */
-        model.addAttribute("users", users);
+        
+        
+        List<FileBucket> fbUsers = null;
+        FileBucket fb = null;
+        String passportEncodedString = "";
+        String itemViewImagEencodedString = "";
+        if (fbUsers == null) {
+            fbUsers = new ArrayList<FileBucket>();
+        }
+        for (User item : userList) {
+            
+            fb = new FileBucket();
+            System.out.println("Passport path :: " + item.getImgLocation() + item.getPassportPhotograph());
+            System.out.println("Item view  path :: " + item.getImgLocation() + item.getImgItemName());
+
+            passportEncodedString = utility.imageToBase64tring(item.getImgLocation() + item.getPassportPhotograph());
+            itemViewImagEencodedString = utility.imageToBase64tring(item.getImgLocation() + item.getImgItemName());
+
+            fb.setId(item.getId());
+            fb.setFirstName(item.getFirstName());
+            fb.setLastName(item.getLastName());
+            fb.setAddress(item.getAddress());
+            fb.setPhoneNumber(item.getPhoneNumber());
+            fb.setItemView(item.getItemView());
+            fb.setImgLocation(item.getImgItemLocation());
+            fb.setImgName(item.getImgName());
+            fb.setItemViewImage(item.getImgLocation());
+            fb.setPassportImage(passportEncodedString);
+            fb.setItemViewImage(itemViewImagEencodedString);
+
+            System.out.println("id :: " + fb.getId() + "fb :: " + fb.getAddress());
+
+            fbUsers.add(fb);
+        }
+
+        model.addAttribute("users", fbUsers);      
+       
+        
+
+        //model.addAttribute("users", userList);
+        
         return "users";
     }
 
@@ -257,11 +335,12 @@ public class AppController {
 
         //model.addAttribute("user", user);
         model.addAttribute("user", fb);
-        model.addAttribute("success", "User " + user.getFirstName() + " " + user.getLastName() + " saved successfully");
-        model.addAttribute("saved", saved);
+        //model.addAttribute("success", "User " + user.getFirstName() + " " + user.getLastName() + " saved successfully");
+        //model.addAttribute("saved", saved);
 
-        return "adduser";
+        //return "adduser";
         //return "redirect:/adduser";
+        return "redirect:/register";
     }
 
     /*
@@ -370,6 +449,7 @@ public class AppController {
 
             passportEncodedString = utility.imageToBase64tring(user.getImgLocation() + user.getPassportPhotograph());
             itemViewImagEencodedString = utility.imageToBase64tring(user.getImgLocation() + user.getImgItemName());
+            // System.out.println("passportEncodedString :: " + passportEncodedString);
 
             /*
                 File file = new File(user.getImgLocation());
@@ -483,21 +563,21 @@ public class AppController {
             user.setImgLocation(imgLocation);
             user.setImgName(photoName);
             user.setImgItemName(itemViewName);
-            
+
             saved = userService.updateUser(user);
-            
+
         } else {
             System.out.println("File is empty / No image uploaded");
         }
 
-        
-
         //model.addAttribute("user", user);
         model.addAttribute("user", fb);
-        model.addAttribute("success", "User " + user.getFirstName() + " " + user.getLastName() + " saved successfully");
-        model.addAttribute("saved", saved);
+       // model.addAttribute("success", "User " + user.getFirstName() + " " + user.getLastName() + " saved successfully");
+       // model.addAttribute("saved", saved);
 
-        return "adduser";
+        //return "adduser";
+        
+        return "redirect:/register";
     }
 
     /*

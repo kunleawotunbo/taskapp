@@ -29,6 +29,7 @@
                                 <th>Address</th>
                                 <th>Phone Number</th>
                                 <th>Passport</th>
+                                <th>Item View</th>
                                 <th width="100"></th>
                                 <th width="100"></th>
                             </tr>
@@ -46,11 +47,12 @@
                                        <%-- ${user.imgLocation}
                                       contextPath ::   ${pageContext.request.contextPath}
                                        --%>
-                                          <img class="photo-icon" src="${pageContext.request.contextPath}${user.imgLocation}" >
-                                          <img width="100" src="<c:url value="/image/"/>${user.imgName}"/>
+                                         <img src="data:image/jpeg;base64,${user.passportImage}" alt="..."float:right width="200" height="200"> 
+                                    <%--     <img src="<c:url value="/image/"/>${user.imgName}" width="200" height="200"/>--%>
                                     </td>
-                                    <td><a href="<c:url value='/edit-user-${user.id}' />" class="btn btn-success custom-width">edit</a></td>
-                                    <td><a href="<c:url value='/delete-user-${user.id}' />" class="btn btn-danger custom-width">delete</a></td>
+                                     <td><img src="data:image/jpeg;base64,${user.itemViewImage}" alt="..."float:right width="200" height="200"> </td>
+                                    <td><a href="<c:url value='/edit-user-${user.id}' />" class="btn btn-success custom-width"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>edit</a></td>
+                                    <td><a href="<c:url value='/delete-user-${user.id}' />" class="btn btn-danger custom-width"><i class="f fa fa-trash-o" aria-hidden="true"></i>delete</a></td>
                                 </tr>
                             </c:forEach>
                         </tbody>

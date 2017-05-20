@@ -29,10 +29,11 @@ public class Utility {
             throw new RuntimeException("Only JPG images are accepted");
         }
     }
-    
-       /**
+
+    /**
      * Resizes an image to a absolute width and height (the image may not be
      * proportional)
+     *
      * @param inputImagePath Path of the original image
      * @param outputImagePath Path to save the resized image
      * @param scaledWidth absolute width in pixels
@@ -45,32 +46,34 @@ public class Utility {
         // reads input image
         File inputFile = new File(inputImagePath);
         BufferedImage inputImage = ImageIO.read(inputFile);
- 
+
         // creates output image
         BufferedImage outputImage = new BufferedImage(scaledWidth,
                 scaledHeight, inputImage.getType());
- 
+
         // scales the input image to the output image
         Graphics2D g2d = outputImage.createGraphics();
         g2d.drawImage(inputImage, 0, 0, scaledWidth, scaledHeight, null);
         g2d.dispose();
- 
+
         // extracts extension of output file
         String formatName = outputImagePath.substring(outputImagePath
                 .lastIndexOf(".") + 1);
- 
+
         // writes to output file
         ImageIO.write(outputImage, formatName, new File(outputImagePath));
     }
-    
-    public String imageToBase64tring(String imgPath){
+
+    public String imageToBase64tring(String imgPath) {
         String encodedString = "";
-        File file = new File(imgPath);
-                FileInputStream fis;
-                ByteArrayOutputStream bos ;
-        try {
-            fis = new FileInputStream(file);
-                 bos = new ByteArrayOutputStream();
+
+        if (imgPath != null && imgPath != "") {
+            File file = new File(imgPath);
+            FileInputStream fis;
+            ByteArrayOutputStream bos;
+            try {
+                fis = new FileInputStream(file);
+                bos = new ByteArrayOutputStream();
                 int b;
                 byte[] buffer = new byte[1024];
                 while ((b = fis.read(buffer)) != -1) {
@@ -82,12 +85,14 @@ public class Utility {
 
                 byte[] encoded = Base64.encodeBase64(fileBytes);
                 encodedString = new String(encoded);
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(Utility.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(Utility.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(Utility.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(Utility.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
         }
-            
+
         return encodedString;
     }
 }

@@ -145,7 +145,7 @@
                 <div class="form-group ">                        
                     <div class="control-label col-xs-3"> <form:label path="files" >Passport Photograph </form:label> </div>
                         <div class="col-md-6">
-                        <form:input type="file" path="files" id="file" onchange="readURL(this)" class="form-control input-sm" required="required"/>
+                        <form:input type="file" path="files" id="file" onchange="readURL(this)" class="form-control input-sm" required="required" accept=".png, .jpg, .jpeg" />
                         <div class="has-error">
                             <form:errors path="files" class="help-inline"/>
                         </div>
@@ -188,7 +188,7 @@
                 <div class="form-group ">                        
                     <div class="control-label col-xs-3"> <form:label path="files" >Item View </form:label> </div>
                         <div class="col-md-6">
-                        <form:input type="file" path="files" id="file2" onchange="readURL(this)" class="form-control input-sm" required="required"/>
+                        <form:input type="file" path="files" id="file2" onchange="readURL(this)" class="form-control input-sm" required="required" accept=".png, .jpg, .jpeg" />
                         <div class="has-error">
                             <form:errors path="files" class="help-inline"/>
                         </div>

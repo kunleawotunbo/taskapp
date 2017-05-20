@@ -1,6 +1,6 @@
 <%-- 
-    Document   : sample
-    Created on : May 18, 2017, 9:46:36 PM
+    Document   : errorPage
+    Created on : May 20, 2017, 11:05:24 AM
     Author     : olakunle
 --%>
 
@@ -17,8 +17,10 @@
             </h3>
         </div>
         <div class="panel-body">
-           <p>Something went wrong</>
-<%--               <h1>${errorMsg}</h1>--%>
+         
+             <h1>${errorMsg}</h1>
+             <p>Please contact the administrator.</p>
+                 
         </div>
     </div>
 </div>

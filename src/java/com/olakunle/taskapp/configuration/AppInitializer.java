@@ -12,14 +12,15 @@ import org.springframework.web.context.support.AnnotationConfigWebApplicationCon
 import org.springframework.web.servlet.DispatcherServlet;
 
 public class AppInitializer implements WebApplicationInitializer {
+
     private int maxUploadSizeInMb = 5 * 1024 * 1024; // 5 MB
-    
-     /*Set these variables for your project needs*/
+
+    /*Set these variables for your project needs*/
     private static final String LOCATION = "C:/mytemp/";
 
     private static final long MAX_FILE_SIZE = 1024 * 1024 * 25;//25MB
 
-    private static final long MAX_REQUEST_SIZE =  1024 * 1024 * 30;//30MB
+    private static final long MAX_REQUEST_SIZE = 1024 * 1024 * 30;//30MB
 
     private static final int FILE_SIZE_THRESHOLD = 0;
 
@@ -34,7 +35,7 @@ public class AppInitializer implements WebApplicationInitializer {
 
         servlet.setLoadOnStartup(1);
         servlet.addMapping("/");
-       
+
     }
 
     protected void customizeRegistration(ServletRegistration.Dynamic registration) {
@@ -45,13 +46,19 @@ public class AppInitializer implements WebApplicationInitializer {
         MultipartConfigElement multipartConfigElement = new MultipartConfigElement(LOCATION, MAX_FILE_SIZE, MAX_REQUEST_SIZE, FILE_SIZE_THRESHOLD);
         return multipartConfigElement;
     }
-    
+
     // @Override
     protected Filter[] getServletFilters() {
         Filter[] singleton = {new CORSFilter()};
         return singleton;
     }
 
-   
+    //  @Override
+    protected void errorHandler(ServletRegistration.Dynamic registration) {
+        boolean done = registration.setInitParameter("throwExceptionIfNoHandlerFound", "true"); // -> true
+        if (!done) {
+            throw new RuntimeException();
+        }
+    }
 
 }
